@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Texas COVID Drive Thru</title>
+    <meta name="viewport" content="initial-scale=1.0">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 90vh;
+      }
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/bootstrap-material-design@4.1.1/dist/css/bootstrap-material-design.min.css" integrity="sha384-wXznGJNEXNG1NFsbm0ugrLFMQPWswR3lds2VeinahP8N0zJw9VWSopbjv2x7WCvX" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.2.0/css/all.css" integrity="sha384-hWVjflwFxL6sNzntih27bfxkr27PmbbK/iSvJ+a4+0owXq79v+lsFkW54bOGbiDQ" crossorigin="anonymous">
+    <link rel="stylesheet" href="static/map.css">
+    <script type="text/javascript" src="static/app.js"></script>
+  </head>
+  <body>
+    <header>
+        <nav class="navbar navbar-expand-lg navbar-top">
+            <div class="container">
+            <a class="navbar-brand">
+                Texas COVID Drive Thrus
+            </a>
+            </div>
+        </nav>
+    </header>
+    <main id="map" class="container-fluid">
+    </main>
+    <script>
+      var map;
+      var markers = []
+      var sites = siteData({{data|tojson}});
+      function initMap() {
+        map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 30.259122, lng: -97.748180},
+          zoom: 8,
+          minZoom: 6,
+          gestureHandling: 'cooperative',
+          streetViewControl: false,
+          mapTypeControl: false,
+          fullscreenControl: false,
+          restriction: {
+            latLngBounds: {
+              north: 50, 
+              south: 25, 
+              west: -130, 
+              east: -70
+            }
+          }
+        });
+        sites.forEach(site => addMarker(site));
+      }
+      function hideAllInfoWindows() {
+        markers.forEach(function(marker) {
+          marker.infowindow.close(map, marker);
+        }); 
+      }
+      function addMarker(site){
+        var mapsLink = 'https://www.google.com/maps/place/' + site.address.replace(' ', '+');
+        var info = '<h2>'+ site.name + '</h1>' +
+            '<h5><i class="fas fa-location-arrow mr-2"></i><a target="_blank" href="' + mapsLink + '">' + site.address + '</a></h5>' +
+            '<h6 class="text-uppercase text-muted"><i class="fas fa-map-marker-alt mr-2"></i>' + site.metro + '</h6><br/>' +
+            '<p><i class="fas fa-link mr-2"></i><strong>Website: </strong><a target="_blank" href="' + site.website + '">' + site.website +'</a></p>';
+        // create marker info window
+        var infowindow = new google.maps.InfoWindow({
+            content: info
+        });
+        // create marker
+        var marker = new google.maps.Marker({
+          position: {lat: site.lat, lng: site.long},
+          map: map,
+          title: site.name,
+          infowindow: infowindow
+        });
+        markers.push(marker);
+        // attach info window to marker
+        marker.addListener('click', function() {
+          hideAllInfoWindows();
+          marker.infowindow.open(map, marker);
+        });
+      }
+    </script>
+    <script src="https://maps.googleapis.com/maps/api/js?key={{API_KEY}}&callback=initMap"
+    async defer></script>
+  </body>
+</html>

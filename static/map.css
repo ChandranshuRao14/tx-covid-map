@@ -1,0 +1,27 @@
+html, body {
+    font-family: 'Open Sans', sans-serif !important;
+    margin: 0;
+    padding: 0;
+    background-color: #fafbfe !important;
+}
+header {
+    height: 10vh;
+}
+h2 {
+    font-weight: 600;
+}
+p {
+    font-size: 15px;
+}
+.navbar-brand {
+    color: white !important;
+}
+.navbar-top {
+    background-color: #313a46;
+    min-height: 80px;
+    color: #98a6ad;
+    position: relative;
+}
+.text-muted {
+    color: #6c757d!important;
+}

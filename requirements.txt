@@ -1,0 +1,5 @@
+flask
+gunicorn
+geojson
+beautifulsoup4
+requests
