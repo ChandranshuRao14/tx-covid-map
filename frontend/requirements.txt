@@ -1,0 +1,7 @@
+flask
+gunicorn
+geojson
+beautifulsoup4
+requests
+google-cloud-secret-manager
+google-cloud-storage

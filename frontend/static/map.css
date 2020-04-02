@@ -4,9 +4,7 @@ html, body {
     padding: 0;
     background-color: #fafbfe !important;
 }
-header {
-    height: 10vh;
-}
+
 h2 {
     font-weight: 600;
 }
@@ -15,6 +13,9 @@ p {
 }
 .navbar-brand {
     color: white !important;
+}
+header {
+    height: 10vh;
 }
 .navbar-top {
     background-color: #313a46;

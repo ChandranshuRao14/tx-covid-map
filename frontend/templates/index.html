@@ -60,10 +60,13 @@
       }
       function addMarker(site){
         var mapsLink = 'https://www.google.com/maps/place/' + site.address.replace(' ', '+');
+        var websites = '';
+        site.websites.forEach(function(site) {
+          websites += '<p><i class="fas fa-link mr-2"></i><strong>Website: </strong><a target="_blank" href="' + site + '">' + site +'</a></p>';
+        });
         var info = '<h2>'+ site.name + '</h1>' +
             '<h5><i class="fas fa-location-arrow mr-2"></i><a target="_blank" href="' + mapsLink + '">' + site.address + '</a></h5>' +
-            '<h6 class="text-uppercase text-muted"><i class="fas fa-map-marker-alt mr-2"></i>' + site.metro + '</h6><br/>' +
-            '<p><i class="fas fa-link mr-2"></i><strong>Website: </strong><a target="_blank" href="' + site.website + '">' + site.website +'</a></p>';
+            '<h6 class="text-uppercase text-muted"><i class="fas fa-map-marker-alt mr-2"></i>' + site.metro + '</h6><br/>' + websites;
         // create marker info window
         var infowindow = new google.maps.InfoWindow({
             content: info
